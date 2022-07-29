@@ -1,40 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Checkbox from "@mui/material/Checkbox";
 import Tooltip from "@mui/material/Tooltip";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-const ToDoItemsContainer = styled.div`
-  width: 100%;
-  min-height: 200px;
-  padding-top: 20px;
-  margin-bottom: 50px;
-`;
-
-const ListStyle = styled.li`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px 10px 5px 0;
-  border-radius: 30px;
-  font-family: "Roboto";
-  font-size: 22px;
-  box-shadow: ${(props) => (props.dragStyle ? "0 0 .4rem #666" : "none")};
-  margin-bottom: 15px;
-
-  &:hover {
-    background-color: #fff;
-  }
-`;
-
-const CeckBoxItemContainer = styled.div`
-  display: flex;
-  align-items: center;
-
-  width: 90%;
-`;
+import { ToDoItemsContainer, ListStyle, CeckBoxItemContainer } from "./ToDoCss";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import InputDialog from "./InputDialog";
 
 export default function ToDoList({
   data,
@@ -44,6 +17,23 @@ export default function ToDoList({
   editToDoValue,
   setToDos,
 }) {
+  const [showInputDialog, setShowInputDialog] = useState(false);
+  const [inputDialogData, setInputDialogData] = useState({});
+  const [selectValue, setSelectValue] = useState();
+
+  console.log(selectValue, data);
+
+  const durationObjectAddToDos = (obj) => {
+    if (!!obj) {
+      setToDos(
+        data.map((e) => {
+          if (e.id === obj.id) {
+            return obj;
+          } else return e;
+        })
+      );
+    }
+  };
   return (
     <ToDoItemsContainer>
       <DragDropContext
@@ -114,6 +104,23 @@ export default function ToDoList({
                                 }
                               }}
                             />
+                            <HourglassTopIcon
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                setInputDialogData(e);
+                                setSelectValue("");
+                                setShowInputDialog(true);
+                              }}
+                            />
+                            {showInputDialog && (
+                              <InputDialog
+                                selectValue={selectValue}
+                                setSelectValue={setSelectValue}
+                                durationObjectAddToDos={durationObjectAddToDos}
+                                data={inputDialogData}
+                                setShowInputDialog={setShowInputDialog}
+                              />
+                            )}
                             {provided.placeholder}
                           </ListStyle>
                         )}

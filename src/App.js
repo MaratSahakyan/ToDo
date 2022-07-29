@@ -4,14 +4,7 @@ import styled from "styled-components";
 import ToDoHeader from "./components/ToDoHeader";
 import ToDoList from "./components/ToDoList";
 import CreateToDo from "./components/CreateToDo";
-
-const ToDoContainer = styled.div`
-  width: 600px;
-  background-color: #f5f5f5;
-  min-height: 300px;
-  padding: 10px 20px;
-  border-radius: 10px;
-`;
+import { ToDoContainer } from "./components/ToDoCss";
 
 function App() {
   const [toDos, setToDos] = useState([]);
@@ -72,6 +65,8 @@ function App() {
       setToDos([...toDos.sort((a, b) => b.id - a.id)]);
     }
   };
+
+  console.log("toDos", toDos);
 
   return (
     <div className="App">

@@ -5,35 +5,12 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Tooltip from "@mui/material/Tooltip";
 import BasicMenu from "./BasicMenu";
-
-const ToDoHeaderContainer = styled.div`
-  width: 100%;
-  height: 60px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const HeaderDateContainer = styled.div`
-  width: 185px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const TitleSelectedDay = styled.h3`
-  font-family: "Roboto";
-  font-weight: 700;
-  font-size: 30px;
-`;
-
-const UpDownContainer = styled.div`
-  width: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+import {
+  ToDoHeaderContainer,
+  HeaderDateContainer,
+  TitleSelectedDay,
+  UpDownContainer,
+} from "./ToDoCss";
 
 export default function ToDoHeader({ changeSelectedTypeData, sortToDoData }) {
   return (

@@ -2,23 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { SignalCellularNullTwoTone } from "@mui/icons-material";
-
-const CreateToDoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 8px;
-`;
-
-const InputField = styled.input`
-  border: none;
-  background-color: #f5f5f5;
-  padding: 5px;
-  width: 100%;
-
-  &::placeholder {
-    font-size: 15px;
-  }
-`;
+import { CreateToDoContainer, InputField } from "./ToDoCss";
+import { Button } from "@mui/material";
+import ReceptionDialog from "./ReceptionDialog";
 
 export default function CreateToDo({
   createNewToDo,
@@ -29,6 +15,8 @@ export default function CreateToDo({
 }) {
   const [inputAutoFocus, setInputAutoFocus] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [showStaticDurationDialog, setShowStaticDurationDialog] =
+    useState(false);
 
   useEffect(() => {
     if (inputValue.length === 0 && !!objectForEditItemValue) {
@@ -79,6 +67,18 @@ export default function CreateToDo({
             onChange={(e) => changeInputValue(e)}
             onKeyDown={(e) => sendNewToDoInEnter(e)}
           />
+          <Button
+            variant="contained"
+            onClick={() => setShowStaticDurationDialog(true)}
+          >
+            Time Spent
+          </Button>
+          {showStaticDurationDialog && (
+            <ReceptionDialog
+              toDos={toDos}
+              setShowStaticDurationDialog={setShowStaticDurationDialog}
+            />
+          )}
         </CreateToDoContainer>
       ) : null}
     </>
