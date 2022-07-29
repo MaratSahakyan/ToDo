@@ -1,78 +1,102 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import "./App.css";
-import MenuListComposition from "./components/MenuListComposition";
-import DatePicker from "./components/DatePicker";
+import styled from "styled-components";
+import ToDoHeader from "./components/ToDoHeader";
 import ToDoList from "./components/ToDoList";
-import CreateItem from "./components/CreateItem";
-import { ChromeReaderModeRounded } from "@mui/icons-material";
+import CreateToDo from "./components/CreateToDo";
+
+const ToDoContainer = styled.div`
+  width: 600px;
+  background-color: #f5f5f5;
+  min-height: 300px;
+  padding: 10px 20px;
+  border-radius: 10px;
+`;
 
 function App() {
-  const [selectedToDoData, setSelectedToDoData] = useState("In-Progres");
-  const [newToDoValue, setNewToDoValue] = useState("");
-  const [selectedEditObject, setSelectedEditObject] = useState();
-  const [chooseOrederInDragAndDrop, setChooseOrederInDragAndDrop] = useState([]);
-  const [callChangeOrderData, setCallChangeOrderData] = useState("")
-  useMemo(() => {
-    return newToDoValue;
-  });
-  
-  const setChooseOrderData = (data) => {
-    if(!!data) { 
-      setChooseOrederInDragAndDrop(data)
-    }
-  }
+  const [toDos, setToDos] = useState([]);
+  const [selectedTypeData, setSelectedTypeData] = useState("In-Progress");
+  const [objectForEditItemValue, setObjectForEditItemValue] = useState();
 
-  const changeOrderCreatedTime = (call) => {
-    if(!!call) {
-      setCallChangeOrderData(call)
-    }
-  }
-
-
-  const chengeSelectedToDoData = (value) => {
-    setSelectedToDoData(value);
-  };
-
-  const newToDo = (obj) => {
-    if (obj) {
-      setNewToDoValue(obj);
+  const createNewToDo = (toDoObject) => {
+    if (!!toDoObject) {
+      setToDos([toDoObject, ...toDos]);
     }
   };
 
+  const changeSelectedTypeData = (value) => {
+    if (!!value) {
+      setSelectedTypeData(value);
+    }
+  };
 
+  const changeTypeInToDoItem = (obj, val) => {
+    if (!!obj && !!val) {
+      obj.type = val;
+      setToDos(
+        toDos.map((e) => {
+          if (e.id === obj.id) {
+            return obj;
+          } else return e;
+        })
+      );
+    }
+  };
 
-  const editSelectedValue = (obj) => {
+  const returnDeletedData = (obj, val) => {
+    if (!!obj && !val) {
+      setToDos(toDos.filter((e) => e.id !== obj.id));
+    }
+    if (!!obj && !!val) {
+      obj.type = val;
+      setToDos(
+        toDos.map((e) => {
+          if (e.id === obj.id) {
+            return obj;
+          } else return e;
+        })
+      );
+    }
+  };
+
+  const editToDoValue = (obj) => {
     if (!!obj) {
-      setSelectedEditObject(obj);
+      setObjectForEditItemValue(obj);
+    }
+  };
+
+  const sortToDoData = (val) => {
+    if (val === "straight") {
+      setToDos([...toDos.sort((a, b) => a.id - b.id)]);
+    } else if (val === "reverse") {
+      setToDos([...toDos.sort((a, b) => b.id - a.id)]);
     }
   };
 
   return (
     <div className="App">
-      <div className="todo-container">
-        <div className="header">
-          <DatePicker  changeOrderCreatedTime={changeOrderCreatedTime}/>
-          <MenuListComposition
-            chengeSelectedToDoData={chengeSelectedToDoData}
-          />
-        </div>
-        <div className="todo-section">
-          {selectedToDoData}
-          <ToDoList
-            callChangeOrderData={callChangeOrderData}
-            setChooseOrderData={setChooseOrderData}
-            editSelectedValue={editSelectedValue}
-            newValue={newToDoValue}
-            data={selectedToDoData}
-          />
-          <CreateItem
-            chooseOrederInDragAndDrop={chooseOrederInDragAndDrop}
-            selectedEditObject={selectedEditObject}
-            newToDoFunction={newToDo}
-            data={selectedToDoData}
-          />
-        </div>
-      </div>
+      <ToDoContainer>
+        <ToDoHeader
+          sortToDoData={sortToDoData}
+          changeSelectedTypeData={changeSelectedTypeData}
+        />
+        {selectedTypeData}
+        <ToDoList
+          setToDos={setToDos}
+          editToDoValue={editToDoValue}
+          returnDeletedData={returnDeletedData}
+          changeTypeInToDoItem={changeTypeInToDoItem}
+          selectedTypeData={selectedTypeData}
+          data={toDos}
+        />
+        <CreateToDo
+          selectedTypeData={selectedTypeData}
+          toDos={toDos}
+          setToDos={setToDos}
+          objectForEditItemValue={objectForEditItemValue}
+          createNewToDo={createNewToDo}
+        />
+      </ToDoContainer>
     </div>
   );
 }

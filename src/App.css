@@ -1,45 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;800&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;800&display=swap');
-
-*{
+* {
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
+}
+
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  text-decoration: none;
 }
 
 .App {
   width: 100vw;
   height: 100vh;
-  background: #E5E5E5;
+  background: #e5e5e5;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-.todo-container {
-  width: 700px;
-  min-height: 200px;
-  background-color: #ffffff;
-  border-radius: 15px;
-  padding: 20px 60px 20px 30px;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-.lineThrough {
-  text-decoration: line-through !important;
-}
-
-.datepicker {
-  font-size: 50px;
-}
-
-
-
