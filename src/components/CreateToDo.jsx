@@ -59,6 +59,7 @@ export default function CreateToDo({
     <>
       {selectedTypeData === "In-Progress" ? (
         <CreateToDoContainer onClick={activedInput}>
+          <div style={{display:'flex', alignItems: 'center', marginBottom: "10px"}}>
           <ControlPointIcon onClick={sendNewToDo} />
           <InputField
             type="text"
@@ -67,6 +68,7 @@ export default function CreateToDo({
             onChange={(e) => changeInputValue(e)}
             onKeyDown={(e) => sendNewToDoInEnter(e)}
           />
+          </div>
           <Button
             variant="contained"
             onClick={() => setShowStaticDurationDialog(true)}

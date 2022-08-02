@@ -66,7 +66,7 @@ function App() {
     }
   };
 
-  console.log("toDos", toDos);
+
 
   return (
     <div className="App">

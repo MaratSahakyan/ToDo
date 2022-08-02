@@ -70,8 +70,8 @@ export const UpDownContainer = styled.div`
 
 export const CreateToDoContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+ flex-direction: column;
   padding: 8px;
 `;
 
@@ -79,7 +79,7 @@ export const InputField = styled.input`
   border: none;
   background-color: #f5f5f5;
   padding: 5px;
-  width: 70%;
+  width: 100%;
 
   &::placeholder {
     font-size: 15px;

@@ -21,8 +21,6 @@ export default function ToDoList({
   const [inputDialogData, setInputDialogData] = useState({});
   const [selectValue, setSelectValue] = useState();
 
-  console.log(selectValue, data);
-
   const durationObjectAddToDos = (obj) => {
     if (!!obj) {
       setToDos(
